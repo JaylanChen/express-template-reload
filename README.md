@@ -6,6 +6,8 @@ Tiny webpack plugin that make express template(like handlebars) support reload p
 npm install --save-dev express-template-reload
 ```
 
+PS: The temeplate should use loader too, such as `raw-loader`,`html-loader` and so on.
+
 ## Usage
 ```js
 // webpack.config.js
@@ -14,7 +16,7 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: [
-    'webpack/hot/only-dev-server',
+    'webpack-hot-middleware/client?reload=true',
     './entry.js'
   ],
   output: {
@@ -41,6 +43,13 @@ module.exports = {
             jsHotAccept: true
           }
         }],
+      },
+      {
+        test: /\.hbs$/,
+        use: {
+          loader: 'raw-loader'
+        },
+        exclude: /node_modules/,
       }
     ]
   }
