@@ -19,20 +19,17 @@ Allowed values are as follows
 |Name|Type|Default|Description|
 |:--:|:--:|:-----:|:----------|
 |**[`enable`](#)**|`{Boolean}`|`true`|Enable this loader or disable, production should disable|
-|**[`publicPath`](#)**|`{String}`|``|The path of the template relative to js|
-|**[`name`](#)**|`{String}`||The template name, suce as `/[folder]/[name].hbs`|
-|**[`viewsSourcePath`](#)**|`{String}`||The templates root path, `viewsSourcePath` + `name` will used to determine if a template exists, if it does not exist, will not modify it|
+|**[`name`](#)**|`{String}`||The template name, like: index.hbs|
+|**[`jsRootDir`](#)**|`{String}`||The js relative root path relative project root path, like: client/js/|
+|**[`templateRootDir`](#)**|`{String}`||The template relative root path relative project root path, like: client/view/|
 |**[`nameFormat`](#)**|`{Function}`||Allows format template name base on the JS file name|
 |**[`jsHotAccept`](#)**|`{Boolean}`|`true`|If `true` adds 'module.hot.accept()' to the bottom of modules allows js `hot module replace`|
 
-## Why use `viewsSourcePath` + `name`, `publicPath`
+## Why use `jsRootDir`, `templateRootDir`
 
-1.`viewsSourcePath` + `name`
-In a multiple-page web application, a webpack entry file should have a template, so use ' viewssourcepath ' + ' name ' to determine whether the current file is a entry file.
+In a multiple-page web application, a webpack entry file should have a template, so use them to calculate the path of the template relative to js. And determines whether the template file exists, if not, the current file is a not entry file, also nothing will not modify.
+
 If you have a better way to judge the current JS is not a webpack entry file, please tell me as soon as possible, thank you.
-
-2.`publicPath`
-JS and templates may not be in one folder, but there should be a rule between them and to relate them.
 
 ## For example
 
@@ -63,8 +60,8 @@ If you want to support reload page when template changed.
 // client/js/home/index.js
 if (module.hot) {
     // template reload
-    require('../../views/home/index.hbs')
-    module.hot.accept('../../views/home/index.hbs', function () {
+    require('../../../client/view/home/index.hbs')
+    module.hot.accept('../../../client/view/home/index.hbs', function () {
         window.location.reload();
     })
     //js hmr
@@ -104,10 +101,10 @@ module.exports = {
           loader: 'express-template-reload',
           options: {
             enable: process.env.NODE_ENV === 'local', //default true
-            publicPath: '../relative/view/source/path',
-            name: '/[folder]/[name].hbs',
-            viewsSourcePath: 'absolute/view/source/path',//Determine if the template exists to inject hmr
-            //nameFormat: name => name.substr(name.indexOf('js/') + 2, name.length),
+            name: '[name].hbs',
+            jsRootDir: 'client/js/',
+            templateRootDir: 'client/views/',
+            //nameFormat: name => name.substr(name.indexOf('views/') + 6, name.length),
             jsHotAccept: true
           }
         }],
