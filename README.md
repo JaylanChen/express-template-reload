@@ -35,6 +35,7 @@ If you have a better way to judge the current JS is not a webpack entry file, pl
 
 File directory structure
 
+```js
 --client
 ----js
 ------home
@@ -44,6 +45,7 @@ File directory structure
 ------home
 --------index.hbs
 ...
+```
 
 As we konw if you want to support JS hmr, you should add this
 
