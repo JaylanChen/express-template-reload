@@ -1,6 +1,6 @@
 {
     "name": "express-template-reload",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Tiny webpack plugin that make express template(like handlebars) support reload page when changed.",
     "main": "index.js",
     "scripts": {
@@ -13,8 +13,10 @@
     "keywords": [
       "webpack",
       "module",
-      "hot",
-      "accept"
+      "express",
+      "handlebars",
+      "template",
+      "reload"
     ],
     "author": "JaylanChen",
     "license": "MIT",
