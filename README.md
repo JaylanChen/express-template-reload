@@ -23,7 +23,8 @@ Allowed values are as follows
 |**[`jsRootDir`](#)**|`{String}`||The js relative root path relative project root path, like: client/js/|
 |**[`templateRootDir`](#)**|`{String}`||The template relative root path relative project root path, like: client/view/|
 |**[`nameFormat`](#)**|`{Function}`||Allows format template name base on the JS file name|
-|**[`jsHotAccept`](#)**|`{Boolean}`|`true`|If `true` adds 'module.hot.accept()' to the bottom of modules allows js `hot module replace`|
+|**[`jsHotAccept`](#)**|`{Boolean}`|`true`|If `true` add `module.hot.accept()` to the bottom of modules allows js `hot module replace`|
+|**[`onlyJS`](#)**|`{Boolean}`|`false`|If `true` just add `module.hot.accept()` to the bottom of modules allows js `hot module replace`, and will not support template reload|
 
 ## Why use `jsRootDir`, `templateRootDir`
 

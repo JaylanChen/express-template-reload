@@ -20,6 +20,26 @@ module.exports = function (source, map) {
         return source;
     }
 
+    // inject `module.hot.accept()` support js hmr
+    let jsHotAccept = options.jsHotAccept || true;
+    let js_hmr = jsHotAccept ? 'module.hot.accept();' + "\n" : '';
+
+    if (jsHotAccept) {
+        // just inject js `module.hot.accept()` support js hmr
+        let onlyJS = options.onlyJS;
+        if (onlyJS === "undefined") {
+            onlyJS = false;
+        }
+        if (onlyJS) {
+            return '' +
+                source + "\n" +
+                "\n" +
+                'if (module.hot) {' +
+                js_hmr +
+                '}' + "\n";
+        }
+    }
+
     // The js relative root path relative project root path, like: client/js/
     let jsRootDir = options.jsRootDir;
 
@@ -61,10 +81,6 @@ module.exports = function (source, map) {
     }
     // The template file name relative the js, like: ../../../client/view/home/index.hbs
     let relativeTemplateFileName = jsRelativeRoot + templateFileName;
-
-    // inject `module.hot.accept()` support js hmr
-    let jsHotAccept = options.jsHotAccept || true;
-    var js_hmr = jsHotAccept ? 'module.hot.accept();' + "\n" : '';
 
     // Determines whether the template file exists, if not, will not modify.
     if (!fs.existsSync(path.resolve(projectRoot, templateFileName))) {
